@@ -14,16 +14,16 @@
       </el-menu-item>
     </router-link>
 
-    <el-submenu default-active="Index" :index="menu.name" v-for="menu in menuList">
+    <el-submenu default-active="Index" :index="menu.name" v-for="menu in menuList" :key="menu.name">
       <template slot="title">
         <i :class="menu.icon"></i>
         <span>{{ menu.title }}</span>
       </template>
-      <router-link :to="item.path" v-for="item in menu.children">
+      <router-link :to="item.path" v-for="item in menu.children" :key="item.path" >
         <el-menu-item :index="item.name">
           <template slot="title">
-            <i :class="menu.icon"></i>
-            <span slot="title">{{ menu.title }}</span>
+            <i :class="item.icon"></i>
+            <span slot="title">{{ item.title }}</span>
           </template>
         </el-menu-item>
       </router-link>
@@ -35,40 +35,13 @@
 export default {
   name: "SideMenu",
   data() {
-    return {
-      menuList: [
-        {
-          name: 'SysManga',
-          title: '系统管理',
-          icon: 'el-icon-s-operation',
-          path: '',
-          component: '',
-          children: [
-            {
-              name: 'SysUser',
-              title: '用户管理',
-              icon: 'el-icon-s-custom',
-              path: '/sys/users',
-              children: []
-            }
-          ]
-        },
-        {
-          name: 'SysTools',
-          title: '系统工具',
-          icon: 'el-icon-s-tools',
-          path: '',
-          children: [
-            {
-              name: 'SysDict',
-              title: '数字字典',
-              icon: 'el-icon-s-order',
-              path: '/sys/dicts',
-              children: []
-            },
-          ]
-        }
-      ],
+    return {}
+  },
+  computed: {
+    menuList: {
+      get() {
+        return this.$store.state.menus.menuList
+      }
     }
   }
 }
