@@ -55,7 +55,7 @@ export default {
           this.$axios.post('/login?' + qs.stringify(this.loginForm)).then(res => {
             console.log(res.data)
             const jwt = res.headers['authorization']
-// 将jwt存储到应用store中
+            // 将jwt存储到应用store中
             this.$store.commit("SET_TOKEN", jwt)
             this.$router.push("/index")
           }).catch(error => {

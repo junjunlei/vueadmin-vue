@@ -1,5 +1,6 @@
 <template>
   <el-menu
+      :default-active="activeMenu"
       class="el-menu-vertical-demo"
       background-color="#545c64"
       text-color="#fff"
@@ -20,7 +21,7 @@
         <span>{{ menu.title }}</span>
       </template>
       <router-link :to="item.path" v-for="item in menu.children" :key="item.path" >
-        <el-menu-item :index="item.name">
+        <el-menu-item :index="item.name" @click="selectMenu(item)">
           <template slot="title">
             <i :class="item.icon"></i>
             <span slot="title">{{ item.title }}</span>
@@ -38,12 +39,25 @@ export default {
     return {}
   },
   computed: {
+    activeMenu() {
+      return this.$store.state.menus.editableTabsValue
+    },
     menuList: {
       get() {
         return this.$store.state.menus.menuList
       }
     }
-  }
+  },
+  methods: {
+    selectMenu(item) {
+      console.log(item)
+      let obj = {
+        name: item.name,
+        title: item.title
+      }
+      this.$store.commit("addTabs", obj)
+    }
+}
 }
 </script>
 <style scoped>

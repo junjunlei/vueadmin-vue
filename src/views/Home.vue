@@ -7,10 +7,10 @@
       <el-header>
         <strong>哈哈哈</strong>
         <div class="header-avatar">
-          <el-avatar  size="medium" :src="userInfo.avatar"></el-avatar>
+          <el-avatar size="medium" :src="userInfo.avatar"></el-avatar>
           <el-dropdown>
             <span class="el-dropdown-link">
-             {{userInfo.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+             {{ userInfo.username }}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item :underline="false">
@@ -24,6 +24,7 @@
         </div>
       </el-header>
       <el-main>
+        <Tabs></Tabs>
         <div style="margin: 0 15px;">
           <router-view></router-view>
         </div>
@@ -35,10 +36,13 @@
 
 <script>
 //这里为什么不子路由？
-import SideMenu from "./SideMenu"
+import SideMenu from "./inc/SideMenu"
+//引入组件
+import Tabs from "./inc/Tabs"
+
 export default {
   name: "Home",
-  components: {SideMenu},
+  components: {SideMenu, Tabs},
   data() {
     return {
       userInfo: {
@@ -48,14 +52,14 @@ export default {
       }
     }
   },
-  methods:{
-    getUserInfo(){
-      this.$axios.get("/sys/userInfo").then(response=>{
-        this.userInfo=response.data.data;
+  methods: {
+    getUserInfo() {
+      this.$axios.get("/sys/userInfo").then(response => {
+        this.userInfo = response.data.data;
       })
     },
-    logout(){
-      this.$axios.post("/logout").then(response=>{
+    logout() {
+      this.$axios.post("/logout").then(response => {
         localStorage.clear();
         sessionStorage.clear();
         this.$store.commit("resetState")
